@@ -9,9 +9,8 @@ def main():
             cmd = input(">. ").strip().lower()
             if cmd.lower() == "quit":
                 print("Exited")
-                break
-            cmd_tokens = tokenize(cmd)
-            print(cmd_tokens)
+                break 
+            print(tokenize(cmd))
 
         except (ValueError, KeyboardInterrupt):
             print("\nexited\n")
