@@ -6,7 +6,7 @@
 def main():
     while True:
         try:
-            cmd = input("<logx>. ").strip().lower()
+            cmd = input(">. ").strip().lower()
             if cmd.lower() == "quit":
                 print("Exited")
                 break
