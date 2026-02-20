@@ -7,10 +7,11 @@ def main():
     while True:
         try:
             cmd = input(">. ").strip().lower()
-            if cmd.lower() == "quit":
+            if cmd == "quit":
                 print("Exited")
-                break 
-            print(tokenize(cmd))
+                break
+            cmd_tokens = tokenize(cmd)
+            print(cmd_tokens)
 
         except (ValueError, KeyboardInterrupt):
             print("\nexited\n")
@@ -18,6 +19,8 @@ def main():
 
 
 def tokenize(str):
+    if not str:
+        return []
     tokens_list = []  # to return a list of tuple
     strlen = len(str)
     '''to keep track of change in token type'''
@@ -36,8 +39,10 @@ def tokenize(str):
             if not prev_char.isspace():
                 prev_char = char
                 #end of a token, append it
-                _= format(token) # converts token into tuple
-                tokens_list.append(_)
+                # converts token into tuple
+                if token:
+                    tokens_list.append(format(token))
+                token = ''
             continue
 
         if char.isalpha():
@@ -52,7 +57,8 @@ def tokenize(str):
 # previous branch handles token change with spaces
 
                 # for token changes without spaces
-                tokens_list.append(format(token))
+                if token:
+                    tokens_list.append(format(token))
             prev_char = char
             token = char
             i += 1
@@ -65,7 +71,8 @@ def tokenize(str):
                 continue
 
             if not prev_char.isspace():
-                tokens_list.append(format(token))
+                if token:
+                    tokens_list.append(format(token))
             prev_char = char
             token = char
             i += 1
@@ -74,14 +81,15 @@ def tokenize(str):
             # handle special characters, each char is a token
         else:
             if not prev_char.isspace():
-                tokens_list.append(format(token))
+                if token:
+                    tokens_list.append(format(token))
             prev_char = char
             token = None # placeholder to avoid appending same token
             tokens_list.append(format(char))
             i += 1
             continue
-
-    tokens_list.append(token)
+    if token:
+        tokens_list.append(format(token))
     # remove the palceholder
     return [x for x in tokens_list if x is not None]
 
