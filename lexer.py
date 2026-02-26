@@ -95,17 +95,28 @@ def tokenize(str):
 
 
 def format(token):
-
     if token is None:
         return None
     elif token.isalpha():
-        return ("Keyword", token)
+        match token:
+            case "min":
+                return ("K_min", token)
+            case "cs":
+                return("k_cs", token) #canonical sum of products
+            case "dcs":
+                return("m_dcs", token) #dont care condition for cs, modifier
 
     elif token.isdigit():
-        return ("Number", int(token))
+        return ("num", int(token))
 
     else:
-        return ("Symbol", token)
+        match token:
+            case "(":
+                return ("l_paren", token)
+            case ")":
+                return ("r_paren", token)
+            case "+":
+                return ("m_plus", token)
 
 if __name__ == "__main__":
     main()
